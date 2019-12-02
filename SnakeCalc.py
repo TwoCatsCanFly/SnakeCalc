@@ -63,8 +63,15 @@ number = []
 calculation = []
 
 def calc():
-    r = eval("".join(calculation))
-    print(r)
+    f = len(calculation)
+    g = calculation[f-1]
+    if g in ["+","-","*","/"]:
+        calculation.pop()
+    try:
+        r = eval("".join(calculation))
+    except:
+        r = "Error"
+    return r
 
 def disp(a):
     c = len(display)+1
@@ -72,7 +79,12 @@ def disp(a):
         inp_show.delete(0,END)
         display.clear()
     elif a == "res":
-        return
+        r = str(calc())
+        inp_show.delete(0, END)
+        inp_show.insert(0, r)
+        calculation.clear()
+        if r != "Error":
+            calculation.append(r)
     else :
         display.append(a)
         inp_show.insert(c,a)
@@ -85,11 +97,13 @@ def btn_click(sym):
     elif sym in ["+","-","*","/","res"]:
         j = ("".join(number))
         number.clear()
-        calculation.append(j)
+        if j != '':
+            calculation.append(j)
         if sym != "res":
             calculation.append(sym)
         if sym == "res":
             calc()
+
         disp(sym)
     else:
         number.append(sym)
@@ -108,6 +122,9 @@ button_8 = Button(root,text="8",padx=40, pady=20,command=lambda: btn_click("8"))
 button_9 = Button(root,text="9",padx=40, pady=20,command=lambda: btn_click("9"))
 
 button_add = Button(root,text="+",padx=39, pady=20,command=lambda: btn_click("+"))
+button_sub = Button(root,text="-",padx=39, pady=20,command=lambda: btn_click("-"))
+button_mil = Button(root,text="*",padx=39, pady=20,command=lambda: btn_click("*"))
+button_diy = Button(root,text="/",padx=39, pady=20,command=lambda: btn_click("/"))
 button_equal = Button(root,text="=",padx=91, pady=20,command=lambda: btn_click("res"))
 button_clear = Button(root,text="Clear",padx=79, pady=20,command=lambda: btn_click("clr"))
 
@@ -123,9 +140,12 @@ button_7.grid(row=1,column=0)
 button_8.grid(row=1,column=1)
 button_9.grid(row=1,column=2)
 
-button_add.grid(row=5,column=0)
+button_add.grid(row=4,column=1)
+button_sub.grid(row=4,column=2)
+button_mil.grid(row=5,column=0)
+button_diy.grid(row=6,column=0)
 button_equal.grid(row=5,column=1,columnspan=2)
-button_clear.grid(row=4,column=1,columnspan=2)
+button_clear.grid(row=6,column=1,columnspan=2)
 
 
 root.mainloop()
