@@ -1,7 +1,8 @@
 from tkinter import *
 root = Tk()
+version = "1.0"
 
-root.title("Snake Calc")
+root.title("Snake Calc "+version)
 inp_show = Entry(root, width=35, borderwidth=5)
 inp_show.grid(row=0,column=0, columnspan=3, padx=10, pady=10)
 display = []
@@ -49,13 +50,14 @@ def btn_click(sym):
             calc()
         disp(sym)
     else:
-        if sym != "0":
+        if sym == "0" and not number:
+            number.append(sym + ".")
+        elif sym == "." and not number:
+            number.append("0" + sym)
+        else:
             number.append(sym)
-        elif sym == "0" and number:
-            number.append(sym)
-        elif sym == "0" and not number:
-            return
         disp(sym)
+        print(number)
 
 button_0 = Button(root,text="0",padx=40, pady=20,command=lambda: btn_click("0"))
 button_1 = Button(root,text="1",padx=40, pady=20,command=lambda: btn_click("1"))
